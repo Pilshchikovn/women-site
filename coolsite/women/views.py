@@ -30,19 +30,30 @@ def about(request):
     return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
+
+
 def addpage(request):
     if request.method == 'POST':
         form = AddPostForm(request.POST)
         if form.is_valid():
-            try:
-                Women.objects.create(**form.cleaned_data)
-                return redirect('home')
-            except:
-                form.add_error(None,'Ошибка добавления поста')
-            # print(form.cleaned_data)
+            form.save()
+            return redirect('home')
     else:
         form = AddPostForm()
     return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})
+
+# def addpage(request):
+#     if request.method == 'POST':
+#         form = AddPostForm(request.POST)
+#         if form.is_valid():
+#             try:
+#                 Women.objects.create(**form.cleaned_data)
+#                 return redirect('home')
+#             except:
+#                 form.add_error(None,'Ошибка добавления поста')
+#     else:
+#         form = AddPostForm()
+#     return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})
 
 
 def contact(request):
